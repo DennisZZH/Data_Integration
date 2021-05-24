@@ -70,10 +70,37 @@ vector<vector<string> > front_end(){
 
 // tt01,Transformer,2005,Action,USA,English,120
 
+string to_sql(string db, vector<string> para, vector<string> schema){
+	string sql = "SELECT ";
+	for(int i=0;i<para.size();i++){
+		if(i!=para.size()-1){
+			sql += db + "." + para[i] + ",";
+		}
+		else{
+			sql += db + "." + para[i] + "\n";
+		}
+	}
+	
+	sql += "FROM " + db + "\n";
+	sql += "WHERE ";
+	for(int i=0;i<schema.size();i++){
+		if(schema[i]!="NA"){
+		    sql += para[i] + "=\"" + schema[i] + "\"";
+		    if(i!=schema.size()-1){
+		        sql +=  + " AND ";
+		    }
+		}	
+	}
+	return sql;
+}
+
 vector<string> unfold(vector<string> schema){
 	vector<string> ret;
 	string sc = schema[0];
+
+	// Direct unfolding
 	if(sc=="Movie"){
+		/*
 		vector<string> movies(22, "NA");
 		movies[0] = "movies";
 		movies[1] = schema[1];
@@ -83,20 +110,30 @@ vector<string> unfold(vector<string> schema){
 		movies[8] = schema[5];
 		movies[9] = schema[6];
 		movies[7] = schema[7];
+		*/
 
-		// Transform to SQL Here!!! 
+		string db = "movies";
+		vector<string> para {"imdb_title_id","title","year","genre","country","language","duration"};
+		string sql = to_sql(db,para,schema);
 
-		return movies;
+		// return xx;
 	}
 	if(sc=="Principal"){
+
+		/*
 		vector<string> title_principals(6, "NA");
 		title_principals[0] = "title_principals";
 		title_principals[3] = schema[1];
 		title_principals[1] = schema[2];
 		title_principals[4] = schema[3];
 		return title_principals;
+		*/
+		string db = "title_principals";
+		vector<string> para {"imdb_name_id","imdb_title_id","category"};
+		string sql = to_sql(db,para,schema);
 	}
 	if(sc=="Oscar"){
+		/*
 		vector<string> the_oscar_award(7, "NA");
 		the_oscar_award[0] = "the_oscar_award";
 		the_oscar_award[5] = schema[1]; // winner name = name + winner=="True"
@@ -104,28 +141,45 @@ vector<string> unfold(vector<string> schema){
 		the_oscar_award[2] = schema[2];
 		the_oscar_award[4] = schema[3];
 		the_oscar_award[6] = schema[4];
-		return the_oscar_award;
+		return the_oscar_award;*/
+		string db = "the_oscar_award";
+		vector<string> para {"name","year_ceremony","category","film"};
+		string sql = to_sql(db,para,schema);
+		sql += " AND winner=\"True\"";
 	}
 	if(sc=="Rating"){
+		/*
 		vector<string> movies(22, "NA"); // same table as Movie
 		movies[0] = "movies";
 		movies[2] = schema[1];
 		movies[14] = schema[2];
 		movies[15] = schema[3];
-		return movies;
+		return movies;*/
+		string db = "movies";
+		vector<string> para {"title","description","avg_vote"};
+		string sql = to_sql(db,para,schema);
 	}
 	if(sc=="Finance"){
+		/*
 		vector<string> movies(22, "NA"); // same table as Movie
 		movies[0] = "movies";
 		movies[2] = schema[1];
 		movies[17] = schema[2];
 		movies[19] = schema[3]; // income is global
-		return movies;
+		return movies;*/
+		string db = "movies";
+		vector<string> para {"title","budget","worlwide_gross_income"};
+		string sql = to_sql(db,para,schema);
 	}
-	/*
+
+	// Indirect unfolding
+	
 	if(sc=="Nominee"){
+
+		/*
 		vector<string> oscar_personnel(27, "NA");
 		vector<string> names(17, "NA");
+
 		oscar_personnel[0] = "oscar_personnel"; // special case, unfolded to two tables
 		names[0] = "names";
 
@@ -138,10 +192,20 @@ vector<string> unfold(vector<string> schema){
 		oscar_personnel[12] = schema[7];
 		oscar_personnel[14] = schema[8];
 		oscar_personnel[2] = schema[9];
+		*/
+
+		// Transform to SQL Here
+
+    	string db1 = "names";
+    	vector<string> name_para {"imdb_name_id","name","date_of_birth","place_of_birth","height"};
+    	string names_sql = to_sql(db1,name_para,schema);
+
+    	string db2 = "oscar_personnel";
+    	vector<string> op_para {"race","religion","sexual_orientation","_golden"};
+    	string op_sql = to_sql(db2,name_para,schema);
 		
-		// Transform to SQL Here!!!
-		
-	}*/
+		// How to join two tables ???
+	}
 	return ret;
 }
 
@@ -151,6 +215,7 @@ void mid_end(vector<vector<string> > v){
 		vector<string> unfolded = unfold(v[i]);
 		mid_end.push_back(unfolded);
 	}
+	/*
 	// print midend
 	cout<<"### Mid End vectors"<<endl;
 	for(int j=0;j<mid_end.size();j++){
@@ -159,12 +224,25 @@ void mid_end(vector<vector<string> > v){
 			cout<<mid_end[j][l]<<" ";
 		}
 		cout<<endl;
-	}
+	}*/
+
 }
 
 int main()
-{
+{	
+	/*
+	// test front to midend
     vector<vector<string> > front = front_end();
     mid_end(front);
+    */
+
+    // test to_sql
+    vector<string> schema {"101","SB", "NA", "CA", "180"};
+    string db = "names";
+    vector<string> para {"imdb_name_id","name","date_of_birth","place_of_birth","height"};
+	string sql = to_sql(db,para,schema);
+	cout<<sql<<endl;
+
+
     return 0;
 }
