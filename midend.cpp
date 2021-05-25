@@ -12,7 +12,6 @@ vector<vector<string>> unfolding(vector<vector<string>> global_quries){
 	vector<vector<string>> local_quries;
 
 	for (auto& query : global_quries) {
-
 		string schema_name = query[0];
 
 		// Direct unfolding
@@ -103,6 +102,66 @@ vector<vector<string>> unfolding(vector<vector<string>> global_quries){
 	return local_quries;
 }
 
-vector<string> traslating(vector<vector<string>> local_queries) {
+vector<string> translating(vector<vector<string>> local_queries) {
+	vector<string> sql_queries;
 
+	for (auto& query : local_queries) {
+		string schema_name = query[0];
+
+		if (schema_name == "movies") {
+			string sql = sql_builder(query, MOVIE_PARAS);
+		}
+
+		if (schema_name == "title_principals") {
+			string sql = sql_builder(query, PRINCIPAL_PARAS);
+		}
+
+		if (schema_name == "the_oscar_award") {
+			string sql = sql_builder(query, OSCAR_PARAS);
+		}
+
+		if (schema_name == "") {}
+
+		if (schema_name == "") {}
+
+		if (schema_name == "") {}
+
+		if (schema_name == "") {}
+
+		if (schema_name == "") {}
+
+		if (schema_name == "") {}
+
+		if (schema_name == "") {}
+
+		if (schema_name == "") {}
+
+	}
+
+	return sql_queries;
+}
+
+string sql_builder(vector<string> query, vector<string> paras){
+	string sql = "SELECT ";
+	string table_name = query[0];
+	for (int i = 0; i < paras.size(); i++){
+		if (i != paras.size() - 1) {
+			sql += table_name + "." + paras[i] + ",";
+		}
+		else{
+			sql += table_name + "." + paras[i] + "\n";
+		}
+	}
+	
+	sql += "FROM " + table_name + "\n";
+	sql += "WHERE ";
+	for (int i = 1; i < query.size(); i++) {
+		if (query[i] != "_") {
+		    sql += paras[i - 1] + "=\"" + query[i] + "\"";
+		    if(i != query.size() - 1) {
+		        sql +=  + " AND ";
+		    }
+		}	
+	}
+	return sql;
 }

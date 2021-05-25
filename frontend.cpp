@@ -75,6 +75,7 @@ vector<vector<string> > front_end() {
 int main()
 {
     vector<vector<string>> global_conj_queries = front_end();
+
 	// print frontend
     print_query_vector(global_conj_queries);
 
@@ -83,8 +84,9 @@ int main()
 	// print midend
     print_query_vector(local_conj_queries);
 
-	//vector<string> local_sql_quries = translating(local_conj_queries);
+	vector<string> local_sql_quries = translating(local_conj_queries);
 
 	// give sql to backend
+	
     return 0;
 }
