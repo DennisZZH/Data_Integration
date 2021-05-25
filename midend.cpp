@@ -69,33 +69,36 @@ vector<vector<string>> unfolding(vector<vector<string>> global_quries){
 
 		// Indirect unfolding, run unfolding algorithm
 
-		if (schema_name == "Nominee") {
-			//STUB
+		if (schema_name == "Nominee") {	// special case, unfolded to two tables
+			vector<string> oscar_personnel(27, "NA");
+			vector<string> names(17, "NA");
+			oscar_personnel[0] = "oscar_personnel"; 
+			names[0] = "names";
+			names[1] = query[1];
+			names[2] = query[2]; // or oscar_personnel[xxx]
+			oscar_personnel[8] = query[3];
+			oscar_personnel[6] = query[4];
+			names[4] = query[5];
+			oscar_personnel[10] = query[6];
+			oscar_personnel[12] = query[7];
+			oscar_personnel[14] = query[8];
+			oscar_personnel[2] = query[9];
+			local_quries.push_back(oscar_personnel);
+			local_quries.push_back(names);
+			continue;
 		}
+
+		if (schema_name == "Popular modern actor") {}
+
+		if (schema_name == "Minority actor") {}
+
+		if (schema_name == "Foreign actor") {}
+
+		if (schema_name == "Successful modern movie") {}
+
+		if (schema_name == "Oscar movie rating") {}
 
 	}
 	
-	/*
-	if(sc=="Nominee"){
-		vector<string> oscar_personnel(27, "NA");
-		vector<string> names(17, "NA");
-		oscar_personnel[0] = "oscar_personnel"; // special case, unfolded to two tables
-		names[0] = "names";
-
-		names[1] = schema[1];
-		names[2] = schema[2]; // or oscar_personnel[xxx]
-		oscar_personnel[8] = schema[3];
-		oscar_personnel[6] = schema[4];
-		names[4] = schema[5];
-		oscar_personnel[10] = schema[6];
-		oscar_personnel[12] = schema[7];
-		oscar_personnel[14] = schema[8];
-		oscar_personnel[2] = schema[9];
-		
-		// Transform to SQL Here!!!
-		
-	}*/
-
-
 	return local_quries;
 }
