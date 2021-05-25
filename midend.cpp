@@ -102,3 +102,7 @@ vector<vector<string>> unfolding(vector<vector<string>> global_quries){
 	
 	return local_quries;
 }
+
+vector<string> traslating(vector<vector<string>> local_queries) {
+
+}
