@@ -69,16 +69,22 @@ vector<vector<string> > front_end() {
 		cout << endl;
 	}
 	
-	// print frontend
-    print_query_vector(global_conj_queries);
-	
     return global_conj_queries;
 }
 
 int main()
 {
     vector<vector<string>> global_conj_queries = front_end();
-	// vector<vector<string>> local_conj_queries = unfolding(global_conj_queries);
-	// vector<string> local_sql_quries = translating(local_conj_queries);
+	// print frontend
+    print_query_vector(global_conj_queries);
+
+	vector<vector<string>> local_conj_queries = unfolding(global_conj_queries);
+
+	// print midend
+    print_query_vector(local_conj_queries);
+
+	//vector<string> local_sql_quries = translating(local_conj_queries);
+
+	// give sql to backend
     return 0;
 }
