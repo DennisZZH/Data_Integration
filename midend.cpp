@@ -108,6 +108,8 @@ vector<string> translating(vector<vector<string>> local_queries) {
 	for (auto& query : local_queries) {
 		string schema_name = query[0];
 
+		// TODO: Problem: how to distinguish Ratings->movies and Movies->movies?
+
 		if (schema_name == "movies") {
 			string sql = sql_builder(query, MOVIE_PARAS);
 		}
