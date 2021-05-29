@@ -86,7 +86,12 @@ int main()
 
 	vector<string> local_sql_quries = translating(local_conj_queries);
 
-	// give sql to backend
+	string sql_query_to_db = join_queries(local_sql_quries);
+
+	// send sql to backend
+	setup_db_connection();
+	query_db(sql_query_to_db);
+	close_db_connection();
 	
     return 0;
 }

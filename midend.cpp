@@ -8,7 +8,7 @@
 
 using namespace std;
 
-string sql_builder(vector<string> query, vector<string> paras){
+string sql_builder(vector<string>& query, vector<string>& paras){
 	string sql = "SELECT ";
 	string table_name = query[0];
 	for (int i = 0; i < paras.size(); i++){
@@ -33,6 +33,10 @@ string sql_builder(vector<string> query, vector<string> paras){
 	return sql;
 }
 
+int count_fields(vector<string>& query) {
+
+}
+
 vector<vector<string>> unfolding(vector<vector<string>> global_quries){
 	vector<vector<string>> local_quries;
 
@@ -42,7 +46,7 @@ vector<vector<string>> unfolding(vector<vector<string>> global_quries){
 		// Direct unfolding
 
 		if (schema_name == "Movie") {
-			vector<string> movies(22, "_");
+			vector<string> movies(23, "_");
 			movies[0] = "movies";
 			for (int i = 1; i < query.size(); i++) movies[i] = query[i];
 			local_quries.push_back(movies);
@@ -50,7 +54,7 @@ vector<vector<string>> unfolding(vector<vector<string>> global_quries){
 		}
 
 		if (schema_name == "Principal") {
-			vector<string> title_principals(6, "_");
+			vector<string> title_principals(7, "_");
 			title_principals[0] = "title_principals";
 			title_principals[3] = query[1];
 			title_principals[1] = query[2];
@@ -60,7 +64,7 @@ vector<vector<string>> unfolding(vector<vector<string>> global_quries){
 		}
 
 		if (schema_name == "Oscar") {
-			vector<string> the_oscar_award(7, "_");
+			vector<string> the_oscar_award(8, "_");
 			the_oscar_award[0] = "the_oscar_award";
 			the_oscar_award[5] = query[1]; // winner name = name + winner=="True"
 			the_oscar_award[7] = "True";
@@ -72,7 +76,7 @@ vector<vector<string>> unfolding(vector<vector<string>> global_quries){
 		}
 
 		if (schema_name == "Rating") {
-			vector<string> movies(22, "_"); // same table as Movie
+			vector<string> movies(23, "_"); // same table as Movie
 			movies[0] = "movies";
 			movies[2] = query[1];
 			movies[14] = query[2];
@@ -82,7 +86,7 @@ vector<vector<string>> unfolding(vector<vector<string>> global_quries){
 		}
 
 		if (schema_name == "Finance") {
-			vector<string> movies(22, "_"); // same table as Movie
+			vector<string> movies(23, "_"); // same table as Movie
 			movies[0] = "movies";
 			movies[2] = query[1];
 			movies[17] = query[2];
@@ -94,8 +98,8 @@ vector<vector<string>> unfolding(vector<vector<string>> global_quries){
 		// Indirect unfolding, run unfolding algorithm
 
 		if (schema_name == "Nominee") {	// special case, unfolded to two tables
-			vector<string> oscar_personnel(27, "NA");
-			vector<string> names(17, "NA");
+			vector<string> oscar_personnel(28, "NA");
+			vector<string> names(18, "NA");
 			oscar_personnel[0] = "oscar_personnel"; 
 			names[0] = "names";
 			names[1] = query[1];
@@ -135,11 +139,11 @@ vector<string> translating(vector<vector<string>> local_queries) {
 
 		// TODO: Problem: how to distinguish Ratings->movies and Movies->movies?
 
-		if (schema_name == "movies") {
+		if (schema_name == "movies" && count_fields(query) == 22) {
 			string sql = sql_builder(query, MOVIE_PARAS);
 		}
 
-		if (schema_name == "title_principals") {
+		if (schema_name == "title_principals" && count_fields(query) == ) {
 			string sql = sql_builder(query, PRINCIPAL_PARAS);
 		}
 
@@ -168,3 +172,7 @@ vector<string> translating(vector<vector<string>> local_queries) {
 	return sql_queries;
 }
 
+
+string join_queries(vector<string> local_sql_queires) {
+
+}

@@ -28,3 +28,5 @@ vector<string> MINORITY_ACTOR_PARAS = {"name", "race", "sexual_orientation"};
 vector<string> FOREIGN_ACTOR_PARAS = {"name", "birthplace"};
 vector<string> SUCCESSFUL_MODERN_MOVIE_PARAS = {"movie_id", "title", "income", "rating", "genre", "language", "year"};
 vector<string> OSCAR_MOVIE_RATING_PARAS = {"movie_id", "title", "year_ceremony", "rating"};
+
+string db_name = "proj.db";
