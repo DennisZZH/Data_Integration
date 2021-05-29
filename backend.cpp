@@ -15,7 +15,9 @@ static int callback(void* data, int argc, char** argv, char** azColName)
 {
     int i;
     fprintf(stderr, "%s: ", (const char*)data);
-  
+   
+    // TODO: backend does not print out the result directlt to std out
+
     for (i = 0; i < argc; i++) {
         printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
     }

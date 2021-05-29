@@ -49,7 +49,7 @@ vector<vector<string> > front_end() {
     cout << "10. " << SUCCESSFUL_MODERN_MOVIE_SCHEMA << endl;
     cout << "11. " << OSCAR_MOVIE_RATING_SCHEMA << endl;
     
-	cout << "\nPlease specify the schemas you wish to include, and press ENTER to finish. E.g. Nominee, Movie, Principal [ENTER]" << endl;
+	cout << "\nPlease specify the schemas you wish to include, and press ENTER to finish. E.g. Nominee,Movie,Principal [ENTER]" << endl;
 
 	// ask and store global schema
 	vector<string> schema_list;
@@ -84,7 +84,7 @@ int main()
 	print_sql_vector(sql_queries, "sql_queries");
 
 	string sql_query_to_db = join_queries(sql_queries);
-	cout << "Final sql query: " << sql_query_to_db << endl;
+	cout << "Testing: Print final sql query: " << sql_query_to_db << endl;
 
 	// send sql to backend
 	// setup_db_connection();

@@ -5,7 +5,9 @@
 
 using namespace std;
 
+
 string DB_NAME = "proj.db";
+
 
 string NOMINEE_SCHEMA = "Nominee (person_id, name, birthday, birthplace, height, race, religion, sexual_orientation, won)";
 string MOVIE_SCHEMA = "Movie (movie_id, title, year, genre, country, language, duration)";
@@ -18,6 +20,7 @@ string MINORITY_ACTOR_SCHEMA = "Minority actor (name, race, sexual_orientation)"
 string FOREIGN_ACTOR_SCHEMA = "Foreign actor (name, birthplace)";
 string SUCCESSFUL_MODERN_MOVIE_SCHEMA = "Successful modern movie (movie_id, title, income, rating, genre, language, year)";
 string OSCAR_MOVIE_RATING_SCHEMA = "Oscar movie rating (movie_id, title, year_ceremony, rating)";
+
 
 vector<string> MOVIE_PARAS = {"movie_id", "title", "year", "genre", "country", "language", "duration"};
 vector<string> PRINCIPAL_PARAS = {"person_id", "movie_id", "job_category"};

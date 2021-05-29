@@ -13,10 +13,10 @@ string sql_builder(vector<string>& query, vector<string>& paras){
 	string table_name = query[0];
 	for (int i = 0; i < paras.size(); i++){
 		if (i != paras.size() - 1) {
-			sql += table_name + "." + paras[i] + ",";
+			sql += table_name + "." + paras[i] + " AS " + paras[i] + ", ";
 		}
 		else{
-			sql += table_name + "." + paras[i] + "\n";
+			sql += table_name + "." + paras[i] + " AS " + paras[i] + "\n";
 		}
 	}
 	
@@ -25,7 +25,7 @@ string sql_builder(vector<string>& query, vector<string>& paras){
 	int acc = 0;
 	for (int i = 1; i < query.size(); i++) {
 		if (query[i] != "_") {
-		    sql += paras[acc++] + "=\"" + query[i] + "\"";
+		    sql += paras[acc++] + "=" + query[i];
 		    if(acc < paras.size()) {
 		        sql +=  + " AND ";
 		    }
@@ -195,6 +195,16 @@ vector<string> translating(vector<vector<string>> local_queries) {
 }
 
 
-string join_queries(vector<string> local_sql_queires) {
+string join_queries(vector<string> sql_queires) {
 	string res = "";
+    for (int i = 0; i < sql_queires.size(); i++) {
+		res += sql_queires[i];
+		if (i != sql_queires.size() - 1) {
+			res += "\n";
+		    res += "UNION";
+		    res += "\n";
+		}
+	}
+    res += ";";
+	return res;
 }
