@@ -26,13 +26,14 @@ static int callback(void* data, int argc, char** argv, char** azColName)
 
 int setup_db_connection() {
     int exit = 0;
-    exit = sqlite3_open(db_name.c_str(), &DB);
+    exit = sqlite3_open(DB_NAME.c_str(), &DB);
     if (exit) {
         std::cerr << "Error open DB " << sqlite3_errmsg(DB) << std::endl;
-        return (-1);
+        return -1;
     }
     else
         std::cout << "Opened Database Successfully!" << std::endl;
+    return 0;
 }
 
 int query_db(string sql_query) {

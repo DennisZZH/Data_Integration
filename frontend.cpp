@@ -75,23 +75,21 @@ vector<vector<string> > front_end() {
 int main()
 {
     vector<vector<string>> global_conj_queries = front_end();
-
-	// print frontend
-    print_query_vector(global_conj_queries);
+    print_query_vector(global_conj_queries, "global_conj_queries");
 
 	vector<vector<string>> local_conj_queries = unfolding(global_conj_queries);
+    print_query_vector(local_conj_queries, "local_conj_queries");
 
-	// print midend
-    print_query_vector(local_conj_queries);
+	vector<string> sql_queries = translating(local_conj_queries);
+	print_sql_vector(sql_queries, "sql_queries");
 
-	vector<string> local_sql_quries = translating(local_conj_queries);
-
-	string sql_query_to_db = join_queries(local_sql_quries);
+	string sql_query_to_db = join_queries(sql_queries);
+	cout << "Final sql query: " << sql_query_to_db << endl;
 
 	// send sql to backend
-	setup_db_connection();
-	query_db(sql_query_to_db);
-	close_db_connection();
+	// setup_db_connection();
+	// query_db(sql_query_to_db);
+	// close_db_connection();
 	
     return 0;
 }

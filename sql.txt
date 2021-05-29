@@ -1,0 +1,23 @@
+SELECT *
+FROM 
+    (SELECT imdb_title_id AS title_id, title FROM movies) t1
+ JOIN
+    (SELECT imd_title_id AS title_id, imd_name_id AS name_id FROM title_principals) t2
+ON (t1.title_id = t2.title_id);
+
+
+
+CREATE TABLE temp2 AS
+SELECT movies.imdb_title_id, movies.title, movies.genre, title_principals.imdb_title_id, title_principals.imdb_name_id, title_principals.category
+FROM movies
+LEFT JOIN title_principals;
+
+SELECT title_principals.imd_name_id AS name_id, title_principals.imd_title_id AS title_id
+FROM title_principals
+
+
+INNER JOIN
+
+SELECT movies.imdb_title_id AS title_id2, movies.title AS title
+FROM movies
+ON title_id=title_id2;

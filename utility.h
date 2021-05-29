@@ -6,7 +6,8 @@
 
 using namespace std;
 
-void print_query_vector(vector<vector<string>> query_vector) {
+void print_query_vector(vector<vector<string>> query_vector, string comment) {
+    cout << comment << endl;
     cout << "Testing: Print query vectors" << endl;
     for (int i = 0; i < query_vector.size(); i++){
     	cout << i + 1 << ". ";
@@ -19,4 +20,15 @@ void print_query_vector(vector<vector<string>> query_vector) {
     }
     cout << endl;
 }
+
+void print_sql_vector(vector<string> sql_queries, string comment) {
+    cout << comment << endl;
+    cout << "Testing: Print sql vectors" << endl;
+    for (int i = 0; i < sql_queries.size(); i++){
+    	cout << i + 1 << ". ";
+    	cout << sql_queries[i] << endl;
+    }
+    cout << endl;
+}
+
 
