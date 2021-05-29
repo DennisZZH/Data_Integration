@@ -8,6 +8,31 @@
 
 using namespace std;
 
+string sql_builder(vector<string> query, vector<string> paras){
+	string sql = "SELECT ";
+	string table_name = query[0];
+	for (int i = 0; i < paras.size(); i++){
+		if (i != paras.size() - 1) {
+			sql += table_name + "." + paras[i] + ",";
+		}
+		else{
+			sql += table_name + "." + paras[i] + "\n";
+		}
+	}
+	
+	sql += "FROM " + table_name + "\n";
+	sql += "WHERE ";
+	for (int i = 1; i < query.size(); i++) {
+		if (query[i] != "_") {
+		    sql += paras[i - 1] + "=\"" + query[i] + "\"";
+		    if(i != query.size() - 1) {
+		        sql +=  + " AND ";
+		    }
+		}	
+	}
+	return sql;
+}
+
 vector<vector<string>> unfolding(vector<vector<string>> global_quries){
 	vector<vector<string>> local_quries;
 
@@ -143,27 +168,3 @@ vector<string> translating(vector<vector<string>> local_queries) {
 	return sql_queries;
 }
 
-string sql_builder(vector<string> query, vector<string> paras){
-	string sql = "SELECT ";
-	string table_name = query[0];
-	for (int i = 0; i < paras.size(); i++){
-		if (i != paras.size() - 1) {
-			sql += table_name + "." + paras[i] + ",";
-		}
-		else{
-			sql += table_name + "." + paras[i] + "\n";
-		}
-	}
-	
-	sql += "FROM " + table_name + "\n";
-	sql += "WHERE ";
-	for (int i = 1; i < query.size(); i++) {
-		if (query[i] != "_") {
-		    sql += paras[i - 1] + "=\"" + query[i] + "\"";
-		    if(i != query.size() - 1) {
-		        sql +=  + " AND ";
-		    }
-		}	
-	}
-	return sql;
-}
