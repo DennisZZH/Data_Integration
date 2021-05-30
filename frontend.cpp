@@ -58,10 +58,10 @@ vector<vector<string> > front_end() {
     cout << endl;
 
 	// prompting for parameters
-	cout << "Please enter schema parameters, if not specified, use '_'. E.g. a,b,_,d,_,f [ENTER]"<< endl;
+	cout << "Please enter schema parameters, if not specified, use '_'. E.g. a,b,_,d,_,f [ENTER]" << endl;
 
 	// asking for parameters for each schema
-	for (int i=0; i < schema_list.size(); i++){
+	for (int i=0; i < schema_list.size(); i++) {
 		string schema_name = schema_list[i];
 		vector<string> para_list;
 		cout << "For "+ schema_name + ":" << endl;
@@ -73,9 +73,16 @@ vector<vector<string> > front_end() {
     return global_conj_queries;
 }
 
+vector<string> get_answer_selection() {
+	cout << "Please select the fields for answer, if return all fields, use '*'. E.g. title,name [ENTER]" << endl;
+	vector<string> res = listen_and_store("");
+	return res;
+}
+
 int main()
 {
     vector<vector<string>> global_conj_queries = front_end();
+	vector<string> answer_selection = get_answer_selection();
     print_query_vector(global_conj_queries, "global_conj_queries");
 
 	vector<vector<string>> local_conj_queries = unfolding(global_conj_queries);
@@ -84,7 +91,7 @@ int main()
 	vector<string> sql_queries = translating(local_conj_queries);
 	print_sql_vector(sql_queries, "sql_queries");
 
-	string sql_query_to_db = join_queries(sql_queries, local_conj_queries);
+	string sql_query_to_db = join_queries(sql_queries, local_conj_queries, answer_selection);
 	cout << "------------------------Testing: Print final sql query" << "------------------------" << endl << sql_query_to_db << endl;
 	
 	// cout << endl << "Sending SQL query to DB..." << endl;

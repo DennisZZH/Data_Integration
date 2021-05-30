@@ -197,9 +197,17 @@ vector<string> translating(vector<vector<string>>& local_queries) {
 }
 
 
-string join_queries(vector<string>& sql_queries, vector<vector<string>>& local_queries) {
+string join_queries(vector<string>& sql_queries, vector<vector<string>>& local_queries, vector<string> answer_selection) {
 	string res = "";
-	res += "SELECT *\n";
+	res += "SELECT ";
+	for (int i = 0; i < answer_selection.size(); i++) {
+		if (i != answer_selection.size() - 1) {
+			res += answer_selection[i] + ", ";
+		}
+		else {
+			res += answer_selection[i] + "\n";
+		}
+	}
 	res += "FROM\n";
 	
 	for (int i = 0; i < sql_queries.size(); i++) {
