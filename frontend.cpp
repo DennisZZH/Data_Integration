@@ -3,6 +3,7 @@
 #include <vector>
 #include <sstream>
 #include <utility>
+#include <sqlite3.h>
 
 #include "midend.cpp"
 #include "backend.cpp"
@@ -83,13 +84,11 @@ int main()
 	vector<string> sql_queries = translating(local_conj_queries);
 	print_sql_vector(sql_queries, "sql_queries");
 
-	string sql_query_to_db = join_queries(sql_queries);
+	string sql_query_to_db = join_queries(sql_queries, local_conj_queries);
 	cout << "Testing: Print final sql query" << endl << sql_query_to_db << endl;
 	
-	cout << endl << "Sending SQL query to DB..." << endl;
-	setup_db_connection(sql_query_to_db);
-	//query_db(sql_query_to_db);
-	//close_db_connection();
+	// cout << endl << "Sending SQL query to DB..." << endl;
+	// query_db(sql_query_to_db);
 	
     return 0;
 }

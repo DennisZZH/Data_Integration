@@ -8,6 +8,14 @@
 
 using namespace std;
 
+string find_match_conds(string t1, string t2) {
+	if ( (t1 == "movies" && t2 == "title_principals") || (t2 == "movies" && t1 == "title_principals") ) return "imdb_title_id";
+	if ( (t1 == "names" && t2 == "title_principals") || (t2 == "names" && t1 == "title_principals") ) return "imdb_name_id";
+	if ( (t1 == "oscar_personnel" && t2 == "names") || (t2 == "oscar_personnel" && t1 == "names") ) return "name";
+	cout << "ERROR: find_match_conds(): Unable to find matching condiction for table " + t1 + " and table " + t2  + " !"<< endl;
+	exit(0);
+}
+
 bool isLastArg(vector<string>& query, int index) {
 	for (int i = index + 1; i < query.size(); i++) {
 		if (query[i] != "_") return false;
@@ -28,25 +36,27 @@ string sql_builder(vector<string>& query, const vector<string> paras){
 	for (int i = 1; i < query.size(); i++){
 		if (query[i] == "_") continue;
 		if (!isLastArg(query, i)) {
-			sql += table_name + "." + paras[i-1] + " AS " + paras[i-1] + ", ";
+			sql += table_name + "." + paras[i-1] + ", ";
 		}
 		else{
-			sql += table_name + "." + paras[i-1] + " AS " + paras[i-1] + "\n";
+			sql += table_name + "." + paras[i-1] + " ";
 		}
 	}
-	sql += "FROM " + table_name + "\n";
-	sql += "WHERE ";
-	for (int i = 1; i < query.size(); i++) {
-		if (query[i] == "_" || query[i] == "S") continue;
-		sql += paras[i-1] + "=" + query[i];
-		if(!isLastCond(query, i)) {
-		    sql +=  + " AND ";
+	sql += "FROM " + table_name + " ";
+	if (!isLastCond(query,0)) {
+		sql += "WHERE ";
+		for (int i = 1; i < query.size(); i++) {
+			if (query[i] == "_" || query[i] == "S") continue;
+			sql += paras[i-1] + "=" + query[i];
+			if(!isLastCond(query, i)) {
+				sql +=  + " AND ";
+			}
 		}
 	}
 	return sql;
 }
 
-vector<vector<string>> unfolding(vector<vector<string>> global_quries){
+vector<vector<string>> unfolding(vector<vector<string>>& global_quries){
 	vector<vector<string>> local_quries;
 
 	for (auto& query : global_quries) {
@@ -118,7 +128,10 @@ vector<vector<string>> unfolding(vector<vector<string>> global_quries){
 			oscar_personnel[0] = "oscar_personnel"; 
 			names[0] = "names";
 			query[1] == "_" ? names[1] = "S" : names[1] = query[1];
-			query[2] == "_" ? names[2] = "S" : names[2] = query[2]; // or oscar_personnel[xxx]
+
+			query[2] == "_" ? names[2] = "S" : names[2] = query[2]; // IMPORTANT, MUST HAVE BOTH!!!
+			query[2] == "_" ? oscar_personnel[11] = "S" : oscar_personnel[11] = query[2];
+
 			query[3] == "_" ? oscar_personnel[3] = "S" : oscar_personnel[3] = query[3];
 			query[4] == "_" ? oscar_personnel[2] = "S" : oscar_personnel[2] = query[4];
 			query[5] == "_" ? names[3] = "S" : names[3] = query[5];
@@ -126,8 +139,8 @@ vector<vector<string>> unfolding(vector<vector<string>> global_quries){
 			query[7] == "_" ? oscar_personnel[5] = "S" : oscar_personnel[5] = query[7];
 			query[8] == "_" ? oscar_personnel[6] = "S" : oscar_personnel[6] = query[8];
 			query[9] == "_" ? oscar_personnel[1] = "S" : oscar_personnel[1] = query[9];
-			local_quries.push_back(oscar_personnel);
 			local_quries.push_back(names);
+			local_quries.push_back(oscar_personnel);
 			continue;
 		}
 
@@ -146,7 +159,7 @@ vector<vector<string>> unfolding(vector<vector<string>> global_quries){
 	return local_quries;
 }
 
-vector<string> translating(vector<vector<string>> local_queries) {
+vector<string> translating(vector<vector<string>>& local_queries) {
 	vector<string> sql_queries;
 	string sql;
 
@@ -184,16 +197,24 @@ vector<string> translating(vector<vector<string>> local_queries) {
 }
 
 
-string join_queries(vector<string> sql_queires) {
+string join_queries(vector<string>& sql_queries, vector<vector<string>>& local_queries) {
 	string res = "";
-    for (int i = 0; i < sql_queires.size(); i++) {
-		res += sql_queires[i];
-		if (i != sql_queires.size() - 1) {
-			res += "\n";
-		    res += "UNION";
-		    res += "\n";
+	res += "SELECT *\n";
+	res += "FROM\n";
+	
+	for (int i = 0; i < sql_queries.size(); i++) {
+		string curr = "(" + sql_queries[i] + ") " + "t" + to_string(i);
+		if (i != 0) {
+			res += "INNER JOIN\n";
+			res += curr + "\n";
+			string match_cond = find_match_conds(local_queries[i-1][0], local_queries[i][0]);
+			res += "ON t" + to_string(i-1) + "." + match_cond + " = t" + to_string(i) + "." + match_cond + "\n";
 		}
-	}
-    res += ";";
+		else {
+			res += curr + "\n";
+		}
+	} 
+    
+	res += ";";
 	return res;
 }
