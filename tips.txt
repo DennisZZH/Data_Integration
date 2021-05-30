@@ -1,3 +1,12 @@
+TODO
+1. optimize front end user promt to accept conjunctive query from user
+2. implement selection over final result
+3. remove the result printing in the backend
+
+
+
+An working example:
+
 Select all the name of the romantic movies casted by homosexual actors who have nominated an Oscar award
 
 ans(mv_name) <-- Movie(mv_id,mv_name,_,”Romance”,_,_,_),
@@ -16,7 +25,9 @@ ans(mv_name) <-- Movie(mv_id,mv_name,_,”Romance”,_,_,_),
                 For Nominee:
                 _,_,_,_,_,_,_,"Gay","FALSE"  
                 
+                
 
+The final joint sql query looks like:
 
 SELECT *
 FROM
@@ -28,3 +39,5 @@ FROM
     (SELECT ... FROM ... WHERE ...) t3
     ON t2.key = t3.ket
 ;
+
+
