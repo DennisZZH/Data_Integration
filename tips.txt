@@ -1,8 +1,8 @@
 TODO
 1. optimize front end user promt to accept conjunctive query from user (not necessary)
-2. implement selection over final result (backend has problem but sqlite studio works fine)
+2. implement selection over final result (backend has wired problems but sqlite studio works fine)
 3. remove the result printing in the backend (not necessary)
-4. implement more global schemas
+4. implement more global schemas (necessary)
 
 
 
