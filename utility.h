@@ -7,7 +7,7 @@
 using namespace std;
 
 void print_query_vector(vector<vector<string>> query_vector, string comment) {
-    cout << "------------------------Testing: Print " << comment << "------------------------" << endl;
+    cout << "------------------------------------Testing: Print " << comment << "------------------------------------" << endl;
     for (int i = 0; i < query_vector.size(); i++){
     	cout << i + 1 << ". ";
     	for (int j = 0; j < query_vector[i].size(); j++){
@@ -21,7 +21,7 @@ void print_query_vector(vector<vector<string>> query_vector, string comment) {
 }
 
 void print_sql_vector(vector<string> sql_queries, string comment) {
-    cout << "------------------------Testing: Print " << comment << "------------------------" << endl;
+    cout << "------------------------------------Testing: Print " << comment << "------------------------------------" << endl;
     for (int i = 0; i < sql_queries.size(); i++){
     	cout << i + 1 << ". ";
     	cout << sql_queries[i] << endl;

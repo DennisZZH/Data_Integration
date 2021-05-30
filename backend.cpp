@@ -12,7 +12,7 @@ using namespace std;
 static int callback(void* data, int argc, char** argv, char** azColName)
 {
     int i;
-    fprintf(stderr, "%s: ", (const char*)data);
+    fprintf(stderr, "%s:\n", (const char*)data);
   
     for (i = 0; i < argc; i++) {
         printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
@@ -33,8 +33,8 @@ int query_db(string sql_query) {
     else
         std::cout << "Opened Database Successfully!" << std::endl;
 
-    string data("CALLBACK FUNCTION");
-
+    string data("Results found");
+    string sql("SELECT * FROM MOVIES");
     int rc = sqlite3_exec(DB, sql_query.c_str(), callback, (void*)data.c_str(), NULL);
   
     if (rc != SQLITE_OK)
