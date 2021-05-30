@@ -37,17 +37,17 @@ vector<vector<string> > front_end() {
 
 	// print global schema, ask for schema input
 	cout<<"\nGLOBAL SCHEMAS"<<endl;
-	cout << "1. "  << NOMINEE_SCHEMA << endl;
-    cout << "2. "  << MOVIE_SCHEMA << endl;
-    cout << "3. "  << PRINCIPAL_SCHEMA << endl;
-    cout << "4. "  << OSCAR_SCHEMA << endl;
-    cout << "5. "  << RATING_SCHEMA << endl;
-    cout << "6. "  << FINANCE_SCHEMA << endl;
-    cout << "7. "  << POPULAR_MODERN_ACTOR_SCHEMA << endl;
-    cout << "8. "  << MINORITY_ACTOR_SCHEMA << endl;
-    cout << "9. "  << FOREIGN_ACTOR_SCHEMA << endl;
-    cout << "10. " << SUCCESSFUL_MODERN_MOVIE_SCHEMA << endl;
-    cout << "11. " << OSCAR_MOVIE_RATING_SCHEMA << endl;
+	cout << "1. "  << NOMINEE_GLOBAL_SCHEMA << endl;
+    cout << "2. "  << MOVIE_GLOBAL_SCHEMA << endl;
+    cout << "3. "  << PRINCIPAL_GLOBAL_SCHEMA << endl;
+    cout << "4. "  << OSCAR_GLOBAL_SCHEMA << endl;
+    cout << "5. "  << RATING_GLOBAL_SCHEMA << endl;
+    cout << "6. "  << FINANCE_GLOBAL_SCHEMA << endl;
+    cout << "7. "  << POPULAR_MODERN_ACTOR_GLOBAL_SCHEMA << endl;
+    cout << "8. "  << MINORITY_ACTOR_GLOBAL_SCHEMA << endl;
+    cout << "9. "  << FOREIGN_ACTOR_GLOBAL_SCHEMA << endl;
+    cout << "10. " << SUCCESSFUL_MODERN_MOVIE_GLOBAL_SCHEMA << endl;
+    cout << "11. " << OSCAR_MOVIE_RATING_GLOBAL_SCHEMA << endl;
     
 	cout << "\nPlease specify the schemas you wish to include, and press ENTER to finish. E.g. Nominee,Movie,Principal [ENTER]" << endl;
 
@@ -85,11 +85,10 @@ int main()
 
 	string sql_query_to_db = join_queries(sql_queries);
 	cout << "Testing: Print final sql query: " << sql_query_to_db << endl;
-
-	// send sql to backend
-	// setup_db_connection();
-	// query_db(sql_query_to_db);
-	// close_db_connection();
+	
+	//setup_db_connection();
+	//query_db(sql_query_to_db);
+	//close_db_connection();
 	
     return 0;
 }

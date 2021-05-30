@@ -52,5 +52,6 @@ int query_db(string sql_query) {
 }
 
 void close_db_connection() {
+    std::cout << "Closed Database!" << std::endl;
     sqlite3_close(DB);
 }
