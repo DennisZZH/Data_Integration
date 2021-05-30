@@ -84,9 +84,10 @@ int main()
 	print_sql_vector(sql_queries, "sql_queries");
 
 	string sql_query_to_db = join_queries(sql_queries);
-	cout << "Testing: Print final sql query: " << sql_query_to_db << endl;
+	cout << "Testing: Print final sql query" << endl << sql_query_to_db << endl;
 	
-	//setup_db_connection();
+	cout << endl << "Sending SQL query to DB..." << endl;
+	setup_db_connection(sql_query_to_db);
 	//query_db(sql_query_to_db);
 	//close_db_connection();
 	

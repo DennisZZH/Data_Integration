@@ -15,24 +15,31 @@ bool isLastArg(vector<string>& query, int index) {
 	return true;
 }
 
+bool isLastCond(vector<string>& query, int index) {
+	for (int i = index + 1; i < query.size(); i++) {
+		if (query[i] != "_" && query[i] != "S") return false;
+	}
+	return true;
+}
+
 string sql_builder(vector<string>& query, const vector<string> paras){
 	string sql = "SELECT ";
 	string table_name = query[0];
-	for (int i = 0; i < paras.size(); i++){
+	for (int i = 1; i < query.size(); i++){
 		if (query[i] == "_") continue;
 		if (!isLastArg(query, i)) {
-			sql += table_name + "." + paras[i] + " AS " + paras[i] + ", ";
+			sql += table_name + "." + paras[i-1] + " AS " + paras[i-1] + ", ";
 		}
 		else{
-			sql += table_name + "." + paras[i] + " AS " + paras[i] + "\n";
+			sql += table_name + "." + paras[i-1] + " AS " + paras[i-1] + "\n";
 		}
 	}
 	sql += "FROM " + table_name + "\n";
 	sql += "WHERE ";
-	for (int i = 1; i < paras.size(); i++) {
-		if (query[i] == "_") continue;
-		sql += paras[i] + "=" + query[i];
-		if(!isLastArg(query, i)) {
+	for (int i = 1; i < query.size(); i++) {
+		if (query[i] == "_" || query[i] == "S") continue;
+		sql += paras[i-1] + "=" + query[i];
+		if(!isLastCond(query, i)) {
 		    sql +=  + " AND ";
 		}
 	}
@@ -50,13 +57,13 @@ vector<vector<string>> unfolding(vector<vector<string>> global_quries){
 		if (schema_name == "Movie") {
 			vector<string> movies(MOVIES_LOCAL_SCHEMA_PARAS.size() + 1, "_");
 			movies[0] = "movies";
-			movies[1] = query[1];
-			movies[2] = query[2];
-			movies[3] = query[3];
-			movies[5] = query[4];
-			movies[7] = query[5];
-			movies[8] = query[6];
-			movies[6] = query[7];
+			query[1] == "_" ? movies[1] = "S" : movies[1] = query[1];
+			query[2] == "_" ? movies[2] = "S" : movies[2] = query[2];
+			query[3] == "_" ? movies[3] = "S" : movies[3] = query[3];
+			query[4] == "_" ? movies[5] = "S" : movies[5] = query[4];
+			query[5] == "_" ? movies[7] = "S" : movies[7] = query[5];
+			query[6] == "_" ? movies[8] = "S" : movies[8] = query[6];
+			query[7] == "_" ? movies[6] = "S" : movies[6] = query[7];
 			local_quries.push_back(movies);
 			continue;
 		}
@@ -64,9 +71,9 @@ vector<vector<string>> unfolding(vector<vector<string>> global_quries){
 		if (schema_name == "Principal") {
 			vector<string> title_principals(TITLE_PRINCIPALS_LOCAL_SCHEMA_PARAS.size() + 1, "_");
 			title_principals[0] = "title_principals";
-			title_principals[2] = query[1];
-			title_principals[1] = query[2];
-			title_principals[3] = query[3];
+			query[1] == "_" ? title_principals[2] = "S" : title_principals[2] = query[1];
+			query[2] == "_" ? title_principals[1] = "S" : title_principals[1] = query[2];
+			query[3] == "_" ? title_principals[3] = "S" : title_principals[3] = query[3];
 			local_quries.push_back(title_principals);
 			continue;
 		}
@@ -74,11 +81,11 @@ vector<vector<string>> unfolding(vector<vector<string>> global_quries){
 		if (schema_name == "Oscar") {
 			vector<string> the_oscar_award(THE_OSCAR_AWARD_LOCAL_SCHEMA_PARAS.size() + 1, "_");
 			the_oscar_award[0] = "the_oscar_award";
-			the_oscar_award[5] = query[1]; // winner name = name + winner=="True"
-			the_oscar_award[7] = "True";
-			the_oscar_award[2] = query[2];
-			the_oscar_award[4] = query[3];
-			the_oscar_award[6] = query[4];
+			query[1] == "_" ? the_oscar_award[5] = "S" : the_oscar_award[5] = query[1]; 
+			the_oscar_award[7] = "True";	// winner name = name + winner=="True"
+			query[2] == "_" ? the_oscar_award[2] = "S" : the_oscar_award[2] = query[2];
+			query[3] == "_" ? the_oscar_award[4] = "S" : the_oscar_award[4] = query[3];
+			query[4] == "_" ? the_oscar_award[6] = "S" : the_oscar_award[6] = query[4];
 			local_quries.push_back(the_oscar_award);
 			continue;
 		}
@@ -86,9 +93,9 @@ vector<vector<string>> unfolding(vector<vector<string>> global_quries){
 		if (schema_name == "Rating") {
 			vector<string> movies(MOVIES_LOCAL_SCHEMA_PARAS.size() + 1, "_"); // same table as Movie
 			movies[0] = "movies";
-			movies[2] = query[1];
-			movies[10] = query[2];
-			movies[11] = query[3];
+			query[1] == "_" ? movies[2] = "S" : movies[2] = query[1];
+			query[2] == "_" ? movies[10] = "S" : movies[10] = query[2];
+			query[3] == "_" ? movies[11] = "S" : movies[11] = query[3];
 			local_quries.push_back(movies);
 			continue;
 		}
@@ -96,9 +103,9 @@ vector<vector<string>> unfolding(vector<vector<string>> global_quries){
 		if (schema_name == "Finance") {
 			vector<string> movies(MOVIES_LOCAL_SCHEMA_PARAS.size() + 1, "_"); // same table as Movie
 			movies[0] = "movies";
-			movies[2] = query[1];
-			movies[12] = query[2];
-			movies[13] = query[3]; // income is global
+			query[1] == "_" ? movies[2] = "S" : movies[2] = query[1];
+			query[2] == "_" ? movies[12] = "S" : movies[12] = query[2];
+			query[3] == "_" ? movies[13] = "S" : movies[13] = query[3]; // income is global
 			local_quries.push_back(movies);
 			continue;
 		}
@@ -110,15 +117,15 @@ vector<vector<string>> unfolding(vector<vector<string>> global_quries){
 			vector<string> names(NAMES_LOCAL_SCHEMA_PARAS.size() + 1, "_");
 			oscar_personnel[0] = "oscar_personnel"; 
 			names[0] = "names";
-			names[1] = query[1];
-			names[2] = query[2]; // or oscar_personnel[xxx]
-			oscar_personnel[3] = query[3];
-			oscar_personnel[2] = query[4];
-			names[3] = query[5];
-			oscar_personnel[4] = query[6];
-			oscar_personnel[5] = query[7];
-			oscar_personnel[6] = query[8];
-			oscar_personnel[1] = query[9];
+			query[1] == "_" ? names[1] = "S" : names[1] = query[1];
+			query[2] == "_" ? names[2] = "S" : names[2] = query[2]; // or oscar_personnel[xxx]
+			query[3] == "_" ? oscar_personnel[3] = "S" : oscar_personnel[3] = query[3];
+			query[4] == "_" ? oscar_personnel[2] = "S" : oscar_personnel[2] = query[4];
+			query[5] == "_" ? names[3] = "S" : names[3] = query[5];
+			query[6] == "_" ? oscar_personnel[4] = "S" : oscar_personnel[4] = query[6];
+			query[7] == "_" ? oscar_personnel[5] = "S" : oscar_personnel[5] = query[7];
+			query[8] == "_" ? oscar_personnel[6] = "S" : oscar_personnel[6] = query[8];
+			query[9] == "_" ? oscar_personnel[1] = "S" : oscar_personnel[1] = query[9];
 			local_quries.push_back(oscar_personnel);
 			local_quries.push_back(names);
 			continue;
