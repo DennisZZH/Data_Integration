@@ -1,0 +1,42 @@
+TODO
+1. optimize front end user promt to accept conjunctive query from user (not necessary)
+2. implement selection over final result (backend has wired problems but sqlite studio works fine)
+3. remove the result printing in the backend (not necessary)
+4. implement more global schemas (necessary)
+
+
+
+An working example:
+
+Select all the name of the romantic movies casted by straight actors who have nominated an Oscar award
+
+ans(mv_name)<-Movie(mv_id,mv_name,_,”Romance”,_,_,_),Principal(mv_id,p_id,“actor”),Nominee(p_id,p_name,_,_,_,_,_,”Straight”,“FALSE”)
+
+                
+                Movie,Principal,Nominee
+
+                For Movie:
+                _,_,_,"Romance",_,_,_
+                
+                For Principal:
+                _,_,"actor"    
+                
+                For Nominee:
+                _,_,_,_,_,_,_,"Straight","FALSE"  
+                
+                
+
+The final joint sql query looks like:
+
+SELECT *
+FROM
+    (SELECT ... FROM ... WHERE ...) t1
+    INNER JOIN
+    (SELECT ... FROM ... WHERE ...) t2
+    ON t1.key = t2.key
+    INNER JOIN
+    (SELECT ... FROM ... WHERE ...) t3
+    ON t2.key = t3.ket
+;
+
+
