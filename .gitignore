@@ -31,5 +31,10 @@
 *.out
 *.app
 
+.DS_Store
+.vscode
 .DS_Store/*
 .vscode/*
+
+*.db
+*.txt
