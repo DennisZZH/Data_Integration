@@ -9,6 +9,11 @@
 using namespace std;
 
 string find_match_conds(string t1, string t2) {
+	if (t1 == t2) {
+		if (t1 == "movies") return "imdb_title_id";
+		if (t1 == "names") return "imdb_name_id";
+		if (t1 == "oscar_personnel") return "name";
+	}
 	if ( (t1 == "movies" && t2 == "title_principals") || (t2 == "movies" && t1 == "title_principals") ) return "imdb_title_id";
 	if ( (t1 == "names" && t2 == "title_principals") || (t2 == "names" && t1 == "title_principals") ) return "imdb_name_id";
 	if ( (t1 == "oscar_personnel" && t2 == "names") || (t2 == "oscar_personnel" && t1 == "names") ) return "name";

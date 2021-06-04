@@ -1,9 +1,7 @@
 TODO
 1. optimize front end user promt to accept conjunctive query from user (not necessary)
-2. implement selection over final result (backend has wired problems but sqlite studio works fine)
-3. remove the result printing in the backend (not necessary)
-4. implement more global schemas (necessary)
 
+1. genre type are conjunctive；category is inconsistent, date format is inconsistent
 
 
 An working example:
@@ -39,4 +37,25 @@ FROM
     ON t2.key = t3.ket
 ;
 
+
+UPDATE movies
+SET budget=replace(budget,"ITL ",'-');
+
+UPDATE movies
+SET budget=replace(budget,"ROL ",'-');
+
+UPDATE movies
+SET budget=replace(budget,"SEK ",'-');
+
+UPDATE movies
+SET budget=replace(budget,"FRF ",'-');
+
+UPDATE movies
+SET budget=replace(budget,"NOK ",'-');
+
+UPDATE movies
+SET budget=replace(budget,"DEM ",'-');
+
+UPDATE movies
+SET budget=replace(budget,'$','');
 
