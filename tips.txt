@@ -1,14 +1,18 @@
 TODO
 1. optimize front end user promt to accept conjunctive query from user (not necessary)
 
-1. genre type are conjunctive；category is inconsistent, date format is inconsistent
+2. genre type are conjunctive；category is inconsistent, category is inconsistent
+
+3. prepare slides, show our schemas, db relations. Example queries, unfording processes
 
 
 An working example:
 
 Select all the name of the romantic movies casted by straight actors who have nominated an Oscar award
 
-ans(mv_name)<-Movie(mv_id,mv_name,_,”Romance”,_,_,_),Principal(mv_id,p_id,“actor”),Nominee(p_id,p_name,_,_,_,_,_,”Straight”,“FALSE”)
+ans(mv_name)<-Movie(mv_id,mv_name,_,”Romance”,_,_,_),
+Principal(mv_id,p_id,“actor”),
+Nominee(p_id,p_name,_,_,_,_,_,”Straight”,“FALSE”)
 
                 
                 Movie,Principal,Nominee
