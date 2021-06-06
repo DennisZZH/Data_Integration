@@ -42,24 +42,78 @@ FROM
 ;
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-------------------------DATA Transformation------------------------ 
 UPDATE movies
-SET budget=replace(budget,"ITL ",'-');
+SET worldwide_gross_income=replace(worldwide_gross_income,"GBP ",'');
 
 UPDATE movies
-SET budget=replace(budget,"ROL ",'-');
+SET worldwide_gross_income=replace(worldwide_gross_income,"PKR ",'');
 
 UPDATE movies
-SET budget=replace(budget,"SEK ",'-');
+SET worldwide_gross_income=replace(worldwide_gross_income,"NPR ",'');
 
 UPDATE movies
-SET budget=replace(budget,"FRF ",'-');
+SET worldwide_gross_income=replace(worldwide_gross_income,"INR ",'');
 
 UPDATE movies
-SET budget=replace(budget,"NOK ",'-');
+SET worldwide_gross_income=replace(worldwide_gross_income,'$','');
 
 UPDATE movies
-SET budget=replace(budget,"DEM ",'-');
+SET budget=replace(budget,"ITL ",'');
+
+UPDATE movies
+SET budget=replace(budget,"ROL ",'');
+
+UPDATE movies
+SET budget=replace(budget,"SEK ",'');
+
+UPDATE movies
+SET budget=replace(budget,"FRF ",'');
+
+UPDATE movies
+SET budget=replace(budget,"NOK ",'');
+
+UPDATE movies
+SET budget=replace(budget,"DEM ",'');
 
 UPDATE movies
 SET budget=replace(budget,'$','');
 
+UPDATE movies 
+SET genre = substr( genre, 0, instr(genre, ','))
+WHERE instr(genre, ',') > 0;
+
+UPDATE the_oscar_award 
+SET award_category = substr( award_category, 0, instr(award_category, '(') - 1)
+WHERE instr(award_category, '(') > 0;
+
+UPDATE oscar_personnel
+SET award_category=replace(award_category,"Best Director",'DIRECTING');
+
+UPDATE oscar_personnel
+SET award_category=replace(award_category,"Best Actor",'ACTOR');
+
+UPDATE oscar_personnel
+SET award_category=replace(award_category,"Best Actress",'ACTRESS');
+
+UPDATE oscar_personnel
+SET award_category=replace(award_category,"Best Supporting Actor",'ACTOR IN A SUPPORTING ROLE');
+
+UPDATE oscar_personnel
+SET award_category=replace(award_category,"Best Supporting Actress",'ACTRESS IN A SUPPORTING ROLE');
