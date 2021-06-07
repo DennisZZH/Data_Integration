@@ -10,7 +10,7 @@ An working example:
 
 Select all the name of the romantic movies casted by straight actors who have nominated an Oscar award
 
-ans(title)<-Movie(imdb_title_id,title,_,”Romance”,_,_,_);Principal(imdb_title_id,imdb_name_id,“actor”);Nominee(imdb_name_id,name,_,_,_,_,_,”Straight”,“FALSE”)
+ans(title)<-Movie(imdb_title_id,title,_,"Romance",_,_,_);Principal(imdb_title_id,imdb_name_id,"actor");Nominee(imdb_name_id,name,_,_,_,_,_,"Straight",“FALSE")
 
                 
                 Movie,Principal,Nominee

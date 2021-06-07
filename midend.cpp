@@ -8,18 +8,21 @@
 
 using namespace std;
 
-string find_match_conds(string t1, string t2) {
-	if (t1 == t2) {
-		if (t1 == "movies") return "imdb_title_id";
-		if (t1 == "names") return "imdb_name_id";
-		if (t1 == "oscar_personnel") return "name";
+bool isEmptyCond(string s) {
+	if (s[0] == '"') return false;
+	return true;
+}
+
+string find_match_key(vector<string> v1, vector<string> v2) {
+	string res;
+	for (int i = 1; i < v1.size(); i++) {
+		if (v1[i] != "_" && v1[i] != "S" && isEmptyCond(v1[i])) {
+			for (int j = 1; j < v2.size(); j++) {
+				if (v1[i] == v2[j]) return v1[i];
+			}
+		}
 	}
-	if ( (t1 == "movies" && t2 == "title_principals") || (t2 == "movies" && t1 == "title_principals") ) return "imdb_title_id";
-	if ( (t1 == "names" && t2 == "title_principals") || (t2 == "names" && t1 == "title_principals") ) return "imdb_name_id";
-	if ( (t1 == "oscar_personnel" && t2 == "names") || (t2 == "oscar_personnel" && t1 == "names") ) return "name";
-	if ( (t1 == "movies" && t2 == "the_oscar_award") || (t2 == "movies" && t1 == "the_oscar_award") ) return "title";
-	cout << "ERROR: find_match_conds(): Unable to find matching condiction for table " + t1 + " and table " + t2  + " !"<< endl;
-	exit(0);
+	return "N/A";
 }
 
 bool isLastArg(vector<string>& query, int index) {
@@ -31,7 +34,7 @@ bool isLastArg(vector<string>& query, int index) {
 
 bool isLastCond(vector<string>& query, int index) {
 	for (int i = index + 1; i < query.size(); i++) {
-		if (query[i] != "_" && query[i] != "S") return false;
+		if (!isEmptyCond(query[i])) return false;
 	}
 	return true;
 }
@@ -52,7 +55,7 @@ string sql_builder(vector<string>& query, const vector<string> paras){
 	if (!isLastCond(query,0)) {
 		sql += "WHERE ";
 		for (int i = 1; i < query.size(); i++) {
-			if (query[i] == "_" || query[i] == "S") continue;
+			if (isEmptyCond(query[i])) continue;
 
 			// check for !=
 			if(query[i][1]=='!'){
@@ -285,10 +288,16 @@ string join_queries(vector<string>& sql_queries, vector<vector<string>>& local_q
 	for (int i = 0; i < sql_queries.size(); i++) {
 		string curr = "(" + sql_queries[i] + ") " + "t" + to_string(i);
 		if (i != 0) {
-			res += "INNER JOIN\n";
-			res += curr + "\n";
-			string match_cond = find_match_conds(local_queries[i-1][0], local_queries[i][0]);
-			res += "ON t" + to_string(i-1) + "." + match_cond + " = t" + to_string(i) + "." + match_cond + "\n";
+			string match_key = find_match_key(local_queries[i-1], local_queries[i]);
+			if (match_key != "N/A") {
+				res += "INNER JOIN\n";
+				res += curr + "\n";
+				res += "ON t" + to_string(i-1) + "." + match_key + " = t" + to_string(i) + "." + match_key + "\n";
+			}
+			else {
+				res += "CROSS JOIN\n";
+				res += curr + "\n";
+			}
 		}
 		else {
 			res += curr + "\n";

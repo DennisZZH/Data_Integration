@@ -34,7 +34,7 @@ vector<string> str_strip_parens(string str, bool flag) {
 	vector<string> res;
 	string title_str, paras_str;
 	size_t pos_start = str.find("("), pos_end = str.find(")");
-	
+
 	if (flag) {
 		title_str = str.substr(0, pos_start);
 		res.push_back(title_str);
@@ -111,8 +111,6 @@ int main()
 	vector<vector<string>> global_conj_query_vectors = get_global_conj_query_vectors(global_conj_str);
     print_query_vector(global_conj_query_vectors, "global_conj_query_vectors");
 
-	exit(0);
-
 	// Unfold the global conj query vectors into local conj query vectors
 	vector<vector<string>> local_conj_query_vectors = unfolding(global_conj_query_vectors);
     print_query_vector(local_conj_query_vectors, "local_conj_query_vectors");
@@ -124,6 +122,8 @@ int main()
 	// Join the sql queries into a final sql query
 	string sql_query_to_db = join_queries(sql_queries, local_conj_query_vectors, answer_selection);
 	print_query_str(sql_query_to_db, "final sql query");
+
+	exit(0);
 	
 	// Send the final sql query to backend, Query the DB
 	cout << endl << "Sending SQL query to DB..." << endl;
