@@ -165,7 +165,7 @@ vector<vector<string>> unfolding(vector<vector<string>>& global_quries){
 			continue;
 		}
 
-		if (schema_name == "Minority actor") {
+		if (schema_name == "Minority_actor") {
 			vector<string> oscar_personnel(OSCAR_PERSONNEL_LOCAL_SCHEMA_PARAS.size() + 1, "_");
 			oscar_personnel[0] = "oscar_personnel";
 			query[1] == "_" ? oscar_personnel[11] = "S" : oscar_personnel[11] = query[1]; 
@@ -273,7 +273,7 @@ vector<string> translating(vector<vector<string>>& local_queries) {
 
 string join_queries(vector<string>& sql_queries, vector<vector<string>>& local_queries, vector<string> answer_selection) {
 	string res = "";
-	res += "SELECT ";
+	res += "SELECT DISTINCT ";
 	for (int i = 0; i < answer_selection.size(); i++) {
 		if (i != answer_selection.size() - 1) {
 			res += answer_selection[i] + ", ";
