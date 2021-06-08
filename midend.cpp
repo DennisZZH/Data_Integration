@@ -207,7 +207,7 @@ vector<vector<string>> unfolding(vector<vector<string>>& global_quries){
 			query[4] == "_" ? movies[5] = "S" : movies[5] = query[4];
 			query[5] == "_" ? movies[8] = "S" : movies[8] = query[5];
 			query[6] == "_" ? movies[3] = "S" : movies[3] = query[6];
-			movies[11] = "\">9.5\"";
+			movies[11] = "\">8.5\"";
 			local_quries.push_back(movies);
 			continue;
 		}
