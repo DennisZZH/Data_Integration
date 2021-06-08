@@ -166,7 +166,7 @@ vector<vector<string>> unfolding(vector<vector<string>>& global_quries){
 			continue;
 		}
 
-		if (schema_name == "Minority actor") {
+		if (schema_name == "Minority_actor") {
 			vector<string> oscar_personnel(OSCAR_PERSONNEL_LOCAL_SCHEMA_PARAS.size() + 1, "_");
 			oscar_personnel[0] = "oscar_personnel";
 			query[1] == "_" ? oscar_personnel[11] = "S" : oscar_personnel[11] = query[1]; 
@@ -176,7 +176,7 @@ vector<vector<string>> unfolding(vector<vector<string>>& global_quries){
 			continue;
 		}
 
-		if (schema_name == "Actor by country") {
+		if (schema_name == "Actor_by_country") {
 			vector<string> names(NAMES_LOCAL_SCHEMA_PARAS.size() + 1, "_");
 			names[0] = "names";
 			query[1] == "_" ? names[2] = "S" : names[2] = query[1];
@@ -185,7 +185,7 @@ vector<vector<string>> unfolding(vector<vector<string>>& global_quries){
 			continue;
 		}
 
-		if (schema_name == "Commercially successful movie") {
+		if (schema_name == "Commercially_successful_movie") {
 			vector<string> movies(MOVIES_LOCAL_SCHEMA_PARAS.size() + 1, "_"); // same table as Movie
 			movies[0] = "movies";
 			query[1] == "_" ? movies[1] = "S" : movies[1] = query[1];
@@ -199,7 +199,7 @@ vector<vector<string>> unfolding(vector<vector<string>>& global_quries){
 			continue;
 		}
 
-		if (schema_name == "High rating movie") {
+		if (schema_name == "High_rating_movie") {
 			vector<string> movies(MOVIES_LOCAL_SCHEMA_PARAS.size() + 1, "_"); // same table as Movie
 			movies[0] = "movies";
 			query[1] == "_" ? movies[1] = "S" : movies[1] = query[1];
@@ -213,7 +213,7 @@ vector<vector<string>> unfolding(vector<vector<string>>& global_quries){
 			continue;
 		}
 
-		if (schema_name == "Oscar movie rating") {
+		if (schema_name == "Oscar_movie_rating") {
 			vector<string> the_oscar_award(THE_OSCAR_AWARD_LOCAL_SCHEMA_PARAS.size() + 1, "_");
 			vector<string> movies(MOVIES_LOCAL_SCHEMA_PARAS.size() + 1, "_");
 			the_oscar_award[0] = "the_oscar_award"; 
@@ -274,7 +274,7 @@ vector<string> translating(vector<vector<string>>& local_queries) {
 
 string join_queries(vector<string>& sql_queries, vector<vector<string>>& local_queries, vector<string> answer_selection) {
 	string res = "";
-	res += "SELECT ";
+	res += "SELECT DISTINCT";
 	for (int i = 0; i < answer_selection.size(); i++) {
 		if (i != answer_selection.size() - 1) {
 			res += answer_selection[i] + ", ";

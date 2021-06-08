@@ -93,7 +93,7 @@ string front_end() {
 	cout << "10. " << HIGH_RATING_MOVIE_GLOBAL_SCHEMA << endl;
     cout << "11. " << OSCAR_MOVIE_RATING_GLOBAL_SCHEMA << endl;
 	cout << "\nPlease input a Conjunctive Query, and press ENTER to finish. E.g. ans(*)<-Movie(imdb_title_id,_,_,_,_,_,_);Principal(imdb_title_id,_,_) [ENTER]" << endl;
-	cin  >> global_conj_str;
+	getline(std::cin, global_conj_str);
 
     return global_conj_str;
 }

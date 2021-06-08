@@ -1,7 +1,5 @@
 TODO
-1. optimize front end user promt to accept conjunctive query from user (not necessary)
-
-2. genre type are conjunctive；category is inconsistent, category is inconsistent
+2. language is conjunctive, T/F letter case inconsistent
 
 3. prepare slides, show our schemas, db relations. Example queries, unfording processes
 
