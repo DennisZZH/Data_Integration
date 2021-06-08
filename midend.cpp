@@ -62,9 +62,8 @@ string sql_builder(vector<string>& query, const vector<string> paras){
 				sql += paras[i-1] + "!=" + "\"" + query[i].substr(2,query[i].length()-2);
 			}
 			// check for >
-			// WHERE CAST(worldwide_gross_income AS INT) > 2000000
-			else if (query[i][0]=='>'){
-				sql += "CAST(" + paras[i-1] + " AS INT)" + ">" + query[i].substr(1,query[i].length()-1);
+			else if (query[i][1]=='>'){
+				sql += paras[i-1] + ">\"" + query[i].substr(2,query[i].length()-1);
 			}
 			else{
 				sql += paras[i-1] + "=" + query[i];
@@ -176,7 +175,7 @@ vector<vector<string>> unfolding(vector<vector<string>>& global_quries){
 			continue;
 		}
 
-		if (schema_name == "Actor by country") {
+		if (schema_name == "Actor_by_country") {
 			vector<string> names(NAMES_LOCAL_SCHEMA_PARAS.size() + 1, "_");
 			names[0] = "names";
 			query[1] == "_" ? names[2] = "S" : names[2] = query[1];
@@ -185,7 +184,7 @@ vector<vector<string>> unfolding(vector<vector<string>>& global_quries){
 			continue;
 		}
 
-		if (schema_name == "Commercially successful movie") {
+		if (schema_name == "Commercially_successful_movie") {
 			vector<string> movies(MOVIES_LOCAL_SCHEMA_PARAS.size() + 1, "_"); // same table as Movie
 			movies[0] = "movies";
 			query[1] == "_" ? movies[1] = "S" : movies[1] = query[1];
@@ -199,7 +198,7 @@ vector<vector<string>> unfolding(vector<vector<string>>& global_quries){
 			continue;
 		}
 
-		if (schema_name == "High rating movie") {
+		if (schema_name == "High_rating_movie") {
 			vector<string> movies(MOVIES_LOCAL_SCHEMA_PARAS.size() + 1, "_"); // same table as Movie
 			movies[0] = "movies";
 			query[1] == "_" ? movies[1] = "S" : movies[1] = query[1];
@@ -213,7 +212,7 @@ vector<vector<string>> unfolding(vector<vector<string>>& global_quries){
 			continue;
 		}
 
-		if (schema_name == "Oscar movie rating") {
+		if (schema_name == "Oscar_movie_rating") {
 			vector<string> the_oscar_award(THE_OSCAR_AWARD_LOCAL_SCHEMA_PARAS.size() + 1, "_");
 			vector<string> movies(MOVIES_LOCAL_SCHEMA_PARAS.size() + 1, "_");
 			the_oscar_award[0] = "the_oscar_award"; 
