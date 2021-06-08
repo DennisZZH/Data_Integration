@@ -1,0 +1,3 @@
+ans(title)<-Movie(imdb_title_id,title,_,"Romance",_,_,_);Principal(imdb_title_id,imdb_name_id,"actor");Nominee(imdb_name_id,name,_,_,_,_,_,"Straight","FALSE")
+
+ans(title)<-Oscar(_,"2018","BEST PICTURE",title)
