@@ -274,7 +274,7 @@ vector<string> translating(vector<vector<string>>& local_queries) {
 
 string join_queries(vector<string>& sql_queries, vector<vector<string>>& local_queries, vector<string> answer_selection) {
 	string res = "";
-	res += "SELECT DISTINCT";
+	res += "SELECT DISTINCT ";
 	for (int i = 0; i < answer_selection.size(); i++) {
 		if (i != answer_selection.size() - 1) {
 			res += answer_selection[i] + ", ";
