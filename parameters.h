@@ -11,16 +11,16 @@ const string DB_NAME = "proj.db";
 const string MOVIE_GLOBAL_SCHEMA = "Movie (imdb_title_id, title, year_film, genre, country, language, duration)";
 const string PRINCIPAL_GLOBAL_SCHEMA = "Principal (imdb_name_id, imdb_title_id, job_category)";
 const string OSCAR_GLOBAL_SCHEMA = "Oscar (name, year_ceremony, award_catagory, title)";
-const string RATING_GLOBAL_SCHEMA = "Rating (title, description, rating)";
+const string RATING_GLOBAL_SCHEMA = "Rating (title, description, avg_vote)";
 const string FINANCE_GLOBAL_SCHEMA = "Finance (title, budget, worldwide_gross_income)";
 const string NOMINEE_GLOBAL_SCHEMA = "Nominee (imdb_name_id, name, date_of_birth, place_of_birth, height, race, religion, sexual_orientation, won)";
 
 
 const string MINORITY_ACTOR_GLOBAL_SCHEMA = "Minority actor (name)";
 const string ACTOR_BY_COUNTRY_GLOBAL_SCHEMA = "Actor by country (name, place_of_birth)";
-const string COMMERCIALLY_SUCCESSFUL_MOVIE_GLOBAL_SCHEMA = "Commercially successful movie (movie_id, title, rating, genre, language, year_film)";
-const string HIGH_RATING_MOVIE_GLOBAL_SCHEMA = "High rating movie (movie_id, title, income, genre, language, year_film)";
-const string OSCAR_MOVIE_RATING_GLOBAL_SCHEMA = "Oscar movie rating (imdb_title_id, title, year_ceremony, rating)";
+const string COMMERCIALLY_SUCCESSFUL_MOVIE_GLOBAL_SCHEMA = "Commercially successful movie (imdb_title_id, title, avg_vote, genre, language, year_film)";
+const string HIGH_RATING_MOVIE_GLOBAL_SCHEMA = "High rating movie (imdb_title_id, title, worldwide_gross_income, genre, language, year_film)";
+const string OSCAR_MOVIE_RATING_GLOBAL_SCHEMA = "Oscar movie rating (imdb_title_id, title, year_ceremony, avg_vote)";
 
 
 const vector<string> MOVIES_LOCAL_SCHEMA_PARAS = {"imdb_title_id","title","year_film","date_published","genre","duration","country","language",
