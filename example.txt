@@ -3,3 +3,7 @@ ans(title)<-Movie(imdb_title_id,title,_,"Romance",_,_,_);Principal(imdb_title_id
 ans(title)<-Oscar(_,"2018","BEST PICTURE",title)
 
 ans(title,worldwide_gross_income)<-High_rating_movie(_,title,worldwide_gross_income,_,_,"2016")
+
+ans(title,avg_vote)<-Oscar_movie_rating(imdb_title_id, title,_, avg_vote);Principal(imdb_name_id,imdb_title_id,_);Nominee(imdb_name_id,_,_,_,_,_,"Jewish",_,_)
+
+ans(name)<-Minority_actor(name);Oscar(name,_,"ACTOR",_)

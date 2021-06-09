@@ -59,7 +59,7 @@ string sql_builder(vector<string>& query, const vector<string> paras){
 
 			// check for !=
 			if(query[i][1]=='!'){
-				sql += paras[i-1] + "!=" + "\"" + query[i].substr(2,query[i].length()-2);
+				sql += paras[i-1] + "<>" + "\"" + query[i].substr(2,query[i].length()-2);
 			}
 			// check for >
 			else if (query[i][1]=='>'){
