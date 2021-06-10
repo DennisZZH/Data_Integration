@@ -15,10 +15,10 @@ static int callback(void* data, int argc, char** argv, char** azColName)
     int i;
     ofstream myfile;
     myfile.open("output.txt", ios::app);
-    fprintf(stderr, "%s:\n", (const char*)data);
+    //fprintf(stderr, "%s:\n", (const char*)data);
   
     for (i = 0; i < argc; i++) {
-        printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
+        //printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
         string colName = azColName[i], val = argv[i] ? argv[i] : "NULL";
         myfile << colName << " = " << val << endl;
     }
