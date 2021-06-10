@@ -45,7 +45,7 @@ int query_db(string sql_query) {
     int rc = sqlite3_exec(DB, sql_query.c_str(), callback, (void*)data.c_str(), NULL);
   
     if (rc != SQLITE_OK)
-        cerr << "Error SELECT" << endl;
+        cerr << "Error SELECT, errno = " << rc << endl;
     else {
         cout << "Operation OK!" << endl;
     }

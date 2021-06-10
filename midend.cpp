@@ -15,6 +15,14 @@ bool isEmptyCond(string s) {
 
 string find_match_key(vector<string> v1, vector<string> v2) {
 	string res;
+	if ( (v1[0] == "names" && v2[0] == "oscar_personnel") ||
+		 (v1[0] == "oscar_personnel" && v2[0] == "names") ) {
+		return "name";
+	}
+	if ( (v1[0] == "the_oscar_award" && v2[0] == "movies") ||
+		 (v1[0] == "movies" && v2[0] == "the_oscar_award") ) {
+		return "title";
+	}
 	for (int i = 1; i < v1.size(); i++) {
 		if (v1[i] != "_" && v1[i] != "S" && isEmptyCond(v1[i])) {
 			for (int j = 1; j < v2.size(); j++) {

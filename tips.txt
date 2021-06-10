@@ -113,3 +113,46 @@ SET award_category=replace(award_category,"Best Supporting Actor",'ACTOR IN A SU
 
 UPDATE oscar_personnel
 SET award_category=replace(award_category,"Best Supporting Actress",'ACTRESS IN A SUPPORTING ROLE');
+
+
+
+
+
+
+--------------------Debug----------------
+
+
+SELECT DISTINCT title
+FROM
+(SELECT movies.imdb_title_id, movies.title, movies.year_film, movies.genre, movies.duration, movies.country, movies.language FROM movies WHERE genre="Romance") t0
+INNER JOIN
+(SELECT title_principals.imdb_title_id, title_principals.imdb_name_id, title_principals.job_category FROM title_principals WHERE job_category="actor") t1
+ON t0.imdb_title_id = t1.imdb_title_id
+INNER JOIN
+(SELECT names.imdb_name_id, names.name, names.height FROM names ) t2
+ON t1.imdb_name_id = t2.imdb_name_id
+INNER JOIN
+(SELECT oscar_personnel.won, oscar_personnel.place_of_birth, oscar_personnel.date_of_birth, oscar_personnel.race, oscar_personnel.religion, oscar_personnel.sexual_orientation, oscar_personnel.name FROM oscar_personnel WHERE won="FALSE" AND sexual_orientation="Straight") t3
+ON t2.name = t3.name
+;
+
+
+SELECT DISTINCT title, avg_vote
+FROM
+(SELECT the_oscar_award.year_ceremony, the_oscar_award.title, the_oscar_award.won FROM the_oscar_award WHERE won="True") t0
+INNER JOIN
+(SELECT movies.imdb_title_id, movies.title, movies.avg_vote FROM movies ) t1
+USING (title)
+INNER JOIN
+(SELECT title_principals.imdb_title_id, title_principals.imdb_name_id, title_principals.job_category FROM title_principals ) t2
+USING (imdb_title_id)
+INNER JOIN
+(SELECT names.imdb_name_id, names.name, names.height FROM names ) t3
+USING (imdb_name_id)
+INNER JOIN
+(SELECT oscar_personnel.won, oscar_personnel.place_of_birth, oscar_personnel.date_of_birth, oscar_personnel.race, oscar_personnel.religion, oscar_personnel.sexual_orientation, oscar_personnel.name FROM oscar_personnel WHERE religion="Jewish") t4
+USING (name)
+;
+
+
+ans(*)<-Oscar_movie_rating(imdb_title_id,_,_,_);Principal(imdb_name_id,imdb_title_id,_);Nominee(imdb_name_id,_,_,_,_,_,"Jewish",_,_)

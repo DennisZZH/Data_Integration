@@ -7,3 +7,4 @@ proj: frontend.cpp
 
 clean:
 	rm proj
+	rm output.txt
