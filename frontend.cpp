@@ -122,8 +122,6 @@ int main()
 	// Join the sql queries into a final sql query
 	string sql_query_to_db = join_queries(sql_queries, local_conj_query_vectors, answer_selection);
 	print_query_str(sql_query_to_db, "final sql query");
-
-	exit(0);
 	
 	// Send the final sql query to backend, Query the DB
 	cout << endl << "Sending SQL query to DB..." << endl;
